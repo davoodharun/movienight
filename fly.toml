@@ -1,5 +1,5 @@
 # Fly.io Configuration
-app = "movieschedule"
+app = "movieschedule-davoodharun"
 primary_region = "dfw"  # Dallas - change to your preferred region
 
 [build]
