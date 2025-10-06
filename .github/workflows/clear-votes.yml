@@ -1,0 +1,106 @@
+name: Clear Votes
+
+on:
+  workflow_dispatch:
+    inputs:
+      screening_id:
+        description: 'Screening ID to clear votes for (leave empty to show all screenings)'
+        required: false
+        type: string
+      confirm:
+        description: 'Type CONFIRM to proceed with vote clearing'
+        required: true
+        type: string
+
+jobs:
+  clear-votes:
+    name: Clear votes for screening
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Validate confirmation
+        run: |
+          if [ "${{ github.event.inputs.confirm }}" != "CONFIRM" ]; then
+            echo "❌ You must type 'CONFIRM' to proceed with vote clearing"
+            exit 1
+          fi
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: List screenings (if no ID provided)
+        if: ${{ github.event.inputs.screening_id == '' }}
+        run: |
+          echo "📋 Available screenings:"
+          flyctl ssh console -C "
+            cd /app && 
+            node -e \"
+              const config = JSON.parse(require('fs').readFileSync('/app/data/config.json', 'utf8'));
+              config.screenings.forEach((s, i) => {
+                const date = new Date(s.date).toLocaleDateString();
+                const votes = s.movies?.reduce((sum, m) => sum + (m.votes || 0), 0) || 0;
+                console.log(\\\`\${i + 1}. \${s.id} - \${date} (\${votes} total votes)\\\`);
+              });
+            \"
+          "
+          echo ""
+          echo "❌ No screening ID provided. Please run the workflow again with a specific screening_id."
+          echo "💡 Use the screening ID (e.g., 'screening_1') from the list above."
+          exit 1
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Clear votes for specified screening
+        if: ${{ github.event.inputs.screening_id != '' }}
+        run: |
+          echo "🧹 Clearing votes for screening: ${{ github.event.inputs.screening_id }}"
+          
+          # Get JWT token by creating a temporary admin user or use API directly
+          flyctl ssh console -C "
+            cd /app && 
+            node -e \"
+              const sqlite3 = require('sqlite3').verbose();
+              const db = new sqlite3.Database('/app/data/movieschedule.db');
+              
+              db.run('DELETE FROM votes WHERE screening_id = ?', ['${{ github.event.inputs.screening_id }}'], function(err) {
+                if (err) {
+                  console.error('❌ Error:', err.message);
+                  process.exit(1);
+                } else {
+                  console.log('✅ Cleared', this.changes, 'votes for screening ${{ github.event.inputs.screening_id }}');
+                }
+                db.close();
+              });
+            \"
+          "
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Create commit log
+        run: |
+          echo "📝 Vote clearing completed at $(date)" >> vote-clearing.log
+          echo "   Screening ID: ${{ github.event.inputs.screening_id }}" >> vote-clearing.log
+          echo "   Triggered by: ${{ github.actor }}" >> vote-clearing.log
+          echo "" >> vote-clearing.log
+        
+      - name: Commit log
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add vote-clearing.log
+          git commit -m "🧹 Clear votes for screening ${{ github.event.inputs.screening_id }}" || exit 0
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

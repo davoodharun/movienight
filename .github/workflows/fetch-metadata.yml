@@ -1,0 +1,83 @@
+name: Fetch Movie Metadata
+
+on:
+  schedule:
+    # Run every Sunday at 2 AM UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update all movies (ignore existing metadata)'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  fetch-metadata:
+    name: Fetch movie metadata from TMDb
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Download current config
+        run: |
+          flyctl ssh console -C "cat /app/data/config.json" > config-backup.json
+          mkdir -p src/data
+          cp config-backup.json src/data/config.json
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Fetch movie metadata
+        run: |
+          if [ "${{ github.event.inputs.force_update }}" = "true" ]; then
+            # Remove existing metadata to force update
+            node -e "
+              const fs = require('fs');
+              const config = JSON.parse(fs.readFileSync('src/data/config.json', 'utf8'));
+              config.screenings.forEach(screening => {
+                screening.movies.forEach(movie => {
+                  delete movie.metadata;
+                });
+              });
+              fs.writeFileSync('src/data/config.json', JSON.stringify(config, null, 2));
+            "
+          fi
+          node scripts/fetch-metadata.js ${{ secrets.TMDB_API_KEY }}
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+
+      - name: Upload updated config
+        run: |
+          flyctl ssh console -C "cp /app/data/config.json /app/data/config-backup-$(date +%Y%m%d).json"
+          cat src/data/config.json | flyctl ssh console -C "cat > /app/data/config.json"
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Restart application
+        run: flyctl apps restart
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Create commit with updated metadata
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add src/data/config.json
+          git diff --staged --quiet || git commit -m "🎬 Auto-update movie metadata"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,10 @@
+---
+description: rules for all front end related work
+alwaysApply: false
+---
+
+- always test your work
+- use compact material styling
+- use responsive and expressive design
+
+utlize browser-tools mcp when possible

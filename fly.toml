@@ -1,0 +1,46 @@
+# Fly.io Configuration
+app = "movieschedule"
+primary_region = "dfw"  # Dallas - change to your preferred region
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3001"
+
+[http_service]
+  internal_port = 3001
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [[http_service.http_options.response.headers]]
+    name = "X-Frame-Options"
+    value = "DENY"
+
+  [[http_service.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[http_service.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+    tls_options = { "alpn" = ["h2", "http/1.1"] }
+
+[mounts]
+  source = "movieschedule_data"
+  destination = "/app/data"
+
+[[statics]]
+  guest_path = "/app/dist/client/dist"
+  url_prefix = "/static/"
+
+[deploy]
+  release_command = "mkdir -p /app/data"
+
+[metrics]
+  port = 9091
+  path = "/metrics"

@@ -1,0 +1,46 @@
+{
+  "name": "movieschedule",
+  "version": "1.0.0",
+  "description": "A movie night scheduling and voting app",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "nodemon --exec ts-node src/server/server.ts",
+    "client:dev": "cd src/client && npm run dev",
+    "build": "npm run build:server && npm run build:client",
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:client": "cd src/client && npm run build",
+    "start": "node dist/server.js",
+    "postinstall": "cd src/client && npm install",
+    "clear-votes": "node scripts/clear-votes.js",
+    "fetch-metadata": "node scripts/fetch-metadata.js"
+  },
+  "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node-fetch": "^2.6.13",
+    "axios": "^1.6.2",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "node-cron": "^3.0.3",
+    "node-fetch": "^3.3.2",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20.10.4",
+    "@types/node-cron": "^3.0.11",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

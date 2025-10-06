@@ -1,0 +1,190 @@
+{
+  "screenings": [
+    {
+      "id": "screening_1",
+      "date": "2025-10-18T18:16:11.651Z",
+      "movies": [
+        {
+          "id": "movie_1",
+          "title": "Rocky Horror Picture Show",
+          "year": 1975,
+          "metadata": {
+            "tmdb_id": 36685,
+            "overview": "After getting a flat tire in the middle of nowhere, newly engaged couple Brad and Janet encounter the eerie mansion of the flamboyant, seductive Dr. Frank-N-Furter and a variety of eccentric characters. Through elaborate dance and rock music, the mad scientist unveils his latest creation: a perfect, muscular man.",
+            "poster_path": "https://image.tmdb.org/t/p/w500/3pyE6ZqDbuJi7zrNzzQzcKTWdmN.jpg",
+            "backdrop_path": "https://image.tmdb.org/t/p/w500/a53EGF0NzHRGKuRItsrtXBM8FCD.jpg",
+            "vote_average": 7.4,
+            "vote_count": 2966,
+            "runtime": 100,
+            "genres": [
+              "Comedy",
+              "Science Fiction",
+              "Fantasy",
+              "Horror"
+            ],
+            "release_date": "1975-08-14",
+            "tagline": "A different set of jaws.",
+            "imdb_id": "tt0073629",
+            "budget": 1400000,
+            "revenue": 171181400,
+            "fetched_at": "2025-10-06T21:46:47.448Z"
+          }
+        },
+        {
+          "id": "movie_2",
+          "title": "Halloween",
+          "year": 1978,
+          "metadata": {
+            "tmdb_id": 948,
+            "overview": "Fifteen years after murdering his sister on Halloween Night 1963, Michael Myers escapes from a mental hospital and returns to the small town of Haddonfield, Illinois to kill again.",
+            "poster_path": "https://image.tmdb.org/t/p/w500/wijlZ3HaYMvlDTPqJoTCWKFkCPU.jpg",
+            "backdrop_path": "https://image.tmdb.org/t/p/w500/aRka9neADW1M0Zf9lF8kW2jEgXe.jpg",
+            "vote_average": 7.561,
+            "vote_count": 5902,
+            "runtime": 91,
+            "genres": [
+              "Horror",
+              "Thriller"
+            ],
+            "release_date": "1978-10-24",
+            "tagline": "The night he came home!",
+            "imdb_id": "tt0077651",
+            "budget": 325000,
+            "revenue": 70260597,
+            "fetched_at": "2025-10-06T21:48:29.873Z"
+          }
+        },
+        {
+          "id": "movie_3",
+          "title": "Jason Lives",
+          "year": 1986,
+          "metadata": {
+            "tmdb_id": 10225,
+            "overview": "Tommy Jarvis, tormented by the fear that maybe Jason isn't really dead, unwittingly resurrects the mass murderer for another bloody rampage.",
+            "poster_path": "https://image.tmdb.org/t/p/w500/6vdUpHvkspQonXBdWcLWW5ciEPJ.jpg",
+            "backdrop_path": "https://image.tmdb.org/t/p/w500/93tvkTtV6tQQiYhxhij9tuODNOq.jpg",
+            "vote_average": 6.245,
+            "vote_count": 1272,
+            "runtime": 86,
+            "genres": [
+              "Horror",
+              "Thriller"
+            ],
+            "release_date": "1986-08-01",
+            "tagline": "Kill or be killed.",
+            "imdb_id": "tt0091080",
+            "budget": 3000000,
+            "revenue": 19472525,
+            "fetched_at": "2025-10-06T21:46:47.948Z"
+          }
+        }
+      ]
+    },
+    {
+      "id": "screening_2",
+      "date": "2025-11-01T18:16:11.652Z",
+      "movies": [
+        {
+          "id": "movie_5",
+          "title": "The Dark Knight",
+          "year": 2008,
+          "metadata": {
+            "tmdb_id": 155,
+            "overview": "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.",
+            "poster_path": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+            "backdrop_path": "https://image.tmdb.org/t/p/w500/cfT29Im5VDvjE0RpyKOSdCKZal7.jpg",
+            "vote_average": 8.523,
+            "vote_count": 34488,
+            "runtime": 152,
+            "genres": [
+              "Drama",
+              "Action",
+              "Crime",
+              "Thriller"
+            ],
+            "release_date": "2008-07-16",
+            "tagline": "Welcome to a world without rules.",
+            "imdb_id": "tt0468569",
+            "budget": 185000000,
+            "revenue": 1004558444,
+            "fetched_at": "2025-10-06T21:46:48.248Z"
+          }
+        },
+        {
+          "id": "movie_6",
+          "title": "Pulp Fiction",
+          "year": 1994,
+          "metadata": {
+            "tmdb_id": 680,
+            "overview": "A burger-loving hit man, his philosophical partner, a drug-addled gangster's moll and a washed-up boxer converge in this sprawling, comedic crime caper. Their adventures unfurl in three stories that ingeniously trip back and forth in time.",
+            "poster_path": "https://image.tmdb.org/t/p/w500/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg",
+            "backdrop_path": "https://image.tmdb.org/t/p/w500/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg",
+            "vote_average": 8.487,
+            "vote_count": 29132,
+            "runtime": 154,
+            "genres": [
+              "Thriller",
+              "Crime",
+              "Comedy",
+              "Drama"
+            ],
+            "release_date": "1994-09-10",
+            "tagline": "From the creator of 'True Romance' & 'Reservoir Dogs'",
+            "imdb_id": "tt0110912",
+            "budget": 8000000,
+            "revenue": 213928762,
+            "fetched_at": "2025-10-06T21:46:48.496Z"
+          }
+        },
+        {
+          "id": "movie_7",
+          "title": "The Godfather",
+          "year": 1972,
+          "metadata": {
+            "tmdb_id": 238,
+            "overview": "Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.",
+            "poster_path": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+            "backdrop_path": "https://image.tmdb.org/t/p/w500/jdHsptJbtalEuVhCV5i7kSC3g0x.jpg",
+            "vote_average": 8.686,
+            "vote_count": 21899,
+            "runtime": 175,
+            "genres": [
+              "Drama",
+              "Crime"
+            ],
+            "release_date": "1972-03-14",
+            "tagline": "An offer you can't refuse.",
+            "imdb_id": "tt0068646",
+            "budget": 6000000,
+            "revenue": 245066411,
+            "fetched_at": "2025-10-06T21:46:48.751Z"
+          }
+        },
+        {
+          "id": "movie_8",
+          "title": "Goodfellas",
+          "year": 1990,
+          "metadata": {
+            "tmdb_id": 769,
+            "overview": "The true story of Henry Hill, a half-Irish, half-Sicilian Brooklyn kid who is adopted by neighbourhood gangsters at an early age and climbs the ranks of a Mafia family under the guidance of Jimmy Conway.",
+            "poster_path": "https://image.tmdb.org/t/p/w500/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg",
+            "backdrop_path": "https://image.tmdb.org/t/p/w500/sw7mordbZxgITU877yTpZCud90M.jpg",
+            "vote_average": 8.455,
+            "vote_count": 13672,
+            "runtime": 145,
+            "genres": [
+              "Drama",
+              "Crime"
+            ],
+            "release_date": "1990-09-12",
+            "tagline": "Three decades of life in the mafia.",
+            "imdb_id": "tt0099685",
+            "budget": 25000000,
+            "revenue": 47072327,
+            "fetched_at": "2025-10-06T21:46:49.059Z"
+          }
+        }
+      ]
+    }
+  ]
+}
