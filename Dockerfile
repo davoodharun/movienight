@@ -20,9 +20,15 @@ RUN npm run build:server
 FROM node:18-alpine
 WORKDIR /app
 
+# Install build dependencies for native modules
+RUN apk add --no-cache python3 make g++
+
 # Install production dependencies
 COPY package*.json ./
 RUN npm ci --omit=dev --ignore-scripts
+
+# Rebuild native modules for Alpine
+RUN npm rebuild sqlite3
 
 # Copy built server
 COPY --from=server-build /app/dist ./dist
@@ -35,6 +41,9 @@ COPY scripts/ ./scripts/
 
 # Create data directory
 RUN mkdir -p data
+
+# Clean up build dependencies to reduce image size
+RUN apk del python3 make g++
 
 # Expose port
 EXPOSE 3001

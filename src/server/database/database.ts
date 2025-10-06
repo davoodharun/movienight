@@ -6,7 +6,7 @@ export class Database {
   private db: sqlite3.Database;
 
   constructor() {
-    const dbPath = process.env.DATABASE_PATH || path.join(__dirname, '../../data/movieschedule.db');
+    const dbPath = process.env.DATABASE_PATH || path.join(__dirname, '../../../data/movieschedule.db');
     this.db = new sqlite3.Database(dbPath);
   }
 
