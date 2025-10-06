@@ -2,7 +2,7 @@
   "name": "movieschedule",
   "version": "1.0.0",
   "description": "A movie night scheduling and voting app",
-  "main": "dist/server.js",
+  "main": "dist/server/server.js",
   "scripts": {
     "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
     "server:dev": "nodemon --exec ts-node src/server/server.ts",
@@ -10,8 +10,8 @@
     "build": "npm run build:server && npm run build:client",
     "build:server": "tsc -p tsconfig.server.json",
     "build:client": "cd src/client && npm run build",
-    "start": "node dist/server.js",
-    "postinstall": "cd src/client && npm install",
+    "start": "node dist/server/server.js",
+    "postinstall": "if [ -d \"src/client\" ]; then cd src/client && npm install; fi",
     "clear-votes": "node scripts/clear-votes.js",
     "fetch-metadata": "node scripts/fetch-metadata.js"
   },
