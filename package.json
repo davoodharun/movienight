@@ -11,7 +11,6 @@
     "build:server": "tsc -p tsconfig.server.json",
     "build:client": "cd src/client && npm run build",
     "start": "node dist/server/server.js",
-    "postinstall": "if [ -d \"src/client\" ]; then cd src/client && npm install; fi",
     "clear-votes": "node scripts/clear-votes.js",
     "fetch-metadata": "node scripts/fetch-metadata.js",
     "sync-config": "node scripts/sync-config.js"
