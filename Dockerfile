@@ -39,6 +39,9 @@ COPY --from=client-build /app/client/build ./dist/client/dist
 # Copy scripts for runtime
 COPY scripts/ ./scripts/
 
+# Copy config file into the image for initialization
+COPY src/data/config.json ./src/data/config.json
+
 # Create data directory
 RUN mkdir -p data
 

@@ -16,13 +16,25 @@ export class ConfigManager {
       if (fs.existsSync(this.configPath)) {
         const configData = fs.readFileSync(this.configPath, 'utf8');
         this.config = JSON.parse(configData);
+        console.log('✅ Loaded config from:', this.configPath);
       } else {
-        // Create default config
-        this.config = this.getDefaultConfig();
-        this.saveConfig();
+        // Try to copy config from the repository first
+        const repoConfigPath = path.join(__dirname, '../../data/config.json');
+        if (fs.existsSync(repoConfigPath)) {
+          console.log('📋 Copying config from repository to data directory...');
+          const configData = fs.readFileSync(repoConfigPath, 'utf8');
+          this.config = JSON.parse(configData);
+          this.saveConfig();
+          console.log('✅ Config copied and saved to:', this.configPath);
+        } else {
+          // Create default config as fallback
+          console.log('⚠️  No config found, creating default config');
+          this.config = this.getDefaultConfig();
+          this.saveConfig();
+        }
       }
     } catch (error) {
-      console.error('Error loading config:', error);
+      console.error('❌ Error loading config:', error);
       this.config = this.getDefaultConfig();
     }
   }
