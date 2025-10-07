@@ -7,7 +7,7 @@ export class ConfigManager {
   private config: Config = { screenings: [] };
 
   constructor() {
-    this.configPath = process.env.CONFIG_PATH || path.join(__dirname, '../../data/config.json');
+    this.configPath = process.env.CONFIG_PATH || path.join(__dirname, '../../../data/config.json');
     this.loadConfig();
   }
 
@@ -19,7 +19,7 @@ export class ConfigManager {
         console.log('✅ Loaded config from:', this.configPath);
       } else {
         // Try to copy config from the repository first
-        const repoConfigPath = path.join(__dirname, '../../data/config.json');
+        const repoConfigPath = path.join(__dirname, '../../../src/data/config.json');
         if (fs.existsSync(repoConfigPath)) {
           console.log('📋 Copying config from repository to data directory...');
           const configData = fs.readFileSync(repoConfigPath, 'utf8');
