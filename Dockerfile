@@ -1,7 +1,8 @@
 # Build stage for client
 FROM node:18-alpine as client-build
 WORKDIR /app/client
-COPY src/client/package*.json ./
+COPY src/client/package.json ./
+COPY src/client/package-lock.json ./
 RUN npm ci
 COPY src/client/ ./
 RUN npm run build
