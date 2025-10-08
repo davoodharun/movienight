@@ -27,3 +27,11 @@ Voting resets after the movie screening date and is open until the next movie sc
 - 
 
 
+# more features
+- movie with the most votes should be displayed at the top and highlighted
+- multiple movie screening dates can be added
+- a button should be displayed to select a movie screening date to view and vote on
+- the movie screening that is coming up next when compared to teh current date should be displayed by default and clearly indicated
+- if a movie screening in the future is selected, make sure that is indicated clearly
+- each movie screening should have a theme property that will be like "Spooky & Scary 1: Classics"
+- each movie screening should have a suggestion input box where users can submit movies one at a time; these movies can be minimally listed at the bottom of thte screening (unique entries only)

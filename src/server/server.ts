@@ -7,6 +7,7 @@ import cron from 'node-cron';
 import { authRoutes } from './routes/auth';
 import { movieRoutes } from './routes/movies';
 import { voteRoutes } from './routes/votes';
+import { suggestionRoutes } from './routes/suggestions';
 import { Database } from './database/database';
 import { ConfigManager } from './config/configManager';
 
@@ -42,9 +43,10 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/movies', movieRoutes(database, configManager));
 app.use('/api/votes', voteRoutes(database, configManager));
+app.use('/api/suggestions', suggestionRoutes(database));
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -53,7 +55,7 @@ app.get('/api/health', (req, res) => {
 
 // Catch all handler: send back React's index.html file
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
 // Schedule vote reset after each screening

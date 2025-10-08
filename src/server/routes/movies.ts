@@ -42,11 +42,53 @@ export const movieRoutes = (database: Database, configManager: ConfigManager) =>
         screening: {
           id: nextScreeningConfig.id,
           date: nextScreeningConfig.date,
+          theme: nextScreeningConfig.theme,
           movies: moviesWithVotes
         }
       });
     } catch (error) {
       console.error('Error fetching next screening:', error);
+      res.status(500).json({ error: 'Failed to fetch screening' });
+    }
+  });
+
+  // Get specific screening by ID
+  router.get('/screening/:id', authenticateToken, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const screeningConfig = configManager.getScreeningById(id);
+      
+      if (!screeningConfig) {
+        return res.status(404).json({ error: 'Screening not found' });
+      }
+
+      // Get votes for this screening
+      const votes = await database.getVotesForScreening(screeningConfig.id);
+
+      // Add vote counts and voter info to movies
+      const moviesWithVotes = await Promise.all(
+        screeningConfig.movies.map(async (movie) => {
+          const movieVotes = votes.filter(vote => vote.movieId === movie.id);
+          const voters = await database.getVotersForMovie(movie.id, screeningConfig.id);
+          
+          return {
+            ...movie,
+            votes: movieVotes.length,
+            voters: voters
+          };
+        })
+      );
+
+      res.json({
+        screening: {
+          id: screeningConfig.id,
+          date: screeningConfig.date,
+          theme: screeningConfig.theme,
+          movies: moviesWithVotes
+        }
+      });
+    } catch (error) {
+      console.error('Error fetching screening:', error);
       res.status(500).json({ error: 'Failed to fetch screening' });
     }
   });
@@ -77,6 +119,7 @@ export const movieRoutes = (database: Database, configManager: ConfigManager) =>
           return {
             id: screeningConfig.id,
             date: screeningConfig.date,
+            theme: screeningConfig.theme,
             movies: moviesWithVotes
           };
         })

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -23,9 +23,8 @@ import {
   Cancel, 
   ExpandMore, 
   ExpandLess, 
-  Star,
   Schedule,
-  Movie as MovieIcon
+  EmojiEvents // Add crown/trophy icon
 } from '@mui/icons-material';
 import { Movie as MovieType } from '../services/api';
 
@@ -36,6 +35,7 @@ interface MovieCardProps {
   hasVoted: boolean;
   userVotedFor: string | null;
   isVotingClosed: boolean;
+  isTopVoted?: boolean; // New prop for highlighting top voted movie
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({
@@ -44,7 +44,8 @@ const MovieCard: React.FC<MovieCardProps> = ({
   onCancelVote,
   hasVoted,
   userVotedFor,
-  isVotingClosed
+  isVotingClosed,
+  isTopVoted = false // Default to false
 }) => {
   const [isVoting, setIsVoting] = useState(false);
   const [showVoters, setShowVoters] = useState(false);
@@ -86,9 +87,11 @@ const MovieCard: React.FC<MovieCardProps> = ({
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
-        border: isUserChoice ? '2px solid #1976d2' : '1px solid #e0e0e0',
+        border: isUserChoice ? '2px solid #1976d2' : isTopVoted ? '3px solid #ff9800' : '1px solid #e0e0e0',
+        backgroundColor: isTopVoted ? '#fff3e0' : 'inherit',
+        boxShadow: isTopVoted ? 6 : 1,
         '&:hover': {
-          boxShadow: 3,
+          boxShadow: isTopVoted ? 8 : 3,
           transform: 'translateY(-2px)',
           transition: 'all 0.2s ease-in-out'
         }
@@ -106,6 +109,23 @@ const MovieCard: React.FC<MovieCardProps> = ({
       )}
 
       <CardContent sx={{ flexGrow: 1, pb: 1 }}>
+        {isTopVoted && (
+          <Box 
+            sx={{ 
+              position: 'absolute', 
+              top: 8, 
+              right: 8, 
+              zIndex: 1,
+              backgroundColor: '#ff9800',
+              borderRadius: '50%',
+              p: 1,
+              boxShadow: 2
+            }}
+          >
+            <EmojiEvents sx={{ color: 'white', fontSize: 20 }} />
+          </Box>
+        )}
+        
         <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
           <Box>
             <Typography variant="h6" component="h3" gutterBottom>

@@ -35,7 +35,7 @@ async function fetchMovieMetadata() {
 
   try {
     // Read current config
-    const configPath = path.join(__dirname, '../src/data/config.json');
+    const configPath = path.join(__dirname, '../data/config.json');
     if (!fs.existsSync(configPath)) {
       console.log('❌ Config file not found at', configPath);
       console.log('Make sure you have run the app at least once to generate the config file.');

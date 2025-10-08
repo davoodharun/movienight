@@ -18,17 +18,23 @@ import { AccountCircle, Movie, ExitToApp } from '@mui/icons-material';
 import { useAuth } from '../contexts/AuthContext';
 import { movieAPI, voteAPI, MovieScreening } from '../services/api';
 import MovieCard from './MovieCard';
+import ScreeningSelector from './ScreeningSelector';
+import MovieSuggestions from './MovieSuggestions';
 
 const Dashboard: React.FC = () => {
   const { user, logout } = useAuth();
-  const [nextScreening, setNextScreening] = useState<MovieScreening | null>(null);
+  const [allScreenings, setAllScreenings] = useState<MovieScreening[]>([]);
+  const [selectedScreening, setSelectedScreening] = useState<MovieScreening | null>(null);
+  const [selectedScreeningId, setSelectedScreeningId] = useState<string | null>(null);
+  const [nextScreeningId, setNextScreeningId] = useState<string | null>(null);
   const [userVote, setUserVote] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);  
   const [error, setError] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   useEffect(() => {
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadData = async () => {
@@ -36,11 +42,33 @@ const Dashboard: React.FC = () => {
       setLoading(true);
       setError(null);
       
-      const screeningData = await movieAPI.getNextScreening();
-      setNextScreening(screeningData.screening);
+      // Load all screenings
+      const allScreeningsData = await movieAPI.getAllScreenings();
+      setAllScreenings(allScreeningsData.screenings);
       
-      if (screeningData.screening) {
-        const voteData = await voteAPI.getMyVote(screeningData.screening.id);
+      // Get the next screening
+      const nextScreeningData = await movieAPI.getNextScreening();
+      const nextScreening = nextScreeningData.screening;
+      
+      if (nextScreening) {
+        setNextScreeningId(nextScreening.id);
+        
+        // If no screening is selected yet, default to the next screening
+        if (!selectedScreeningId) {
+          setSelectedScreeningId(nextScreening.id);
+          setSelectedScreening(nextScreening);
+          
+          // Get user vote for this screening
+          const voteData = await voteAPI.getMyVote(nextScreening.id);
+          setUserVote(voteData.vote?.movieId || null);
+        }
+      } else if (allScreeningsData.screenings.length > 0 && !selectedScreeningId) {
+        // If no next screening, default to the first available screening
+        const firstScreening = allScreeningsData.screenings[0];
+        setSelectedScreeningId(firstScreening.id);
+        setSelectedScreening(firstScreening);
+        
+        const voteData = await voteAPI.getMyVote(firstScreening.id);
         setUserVote(voteData.vote?.movieId || null);
       }
     } catch (err) {
@@ -51,14 +79,36 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const handleScreeningSelect = async (screeningId: string) => {
+    try {
+      setLoading(true);
+      setSelectedScreeningId(screeningId);
+      
+      // Load the selected screening data
+      const screeningData = await movieAPI.getScreeningById(screeningId);
+      setSelectedScreening(screeningData.screening);
+      
+      // Get user vote for this screening
+      if (screeningData.screening) {
+        const voteData = await voteAPI.getMyVote(screeningData.screening.id);
+        setUserVote(voteData.vote?.movieId || null);
+      }
+    } catch (err) {
+      console.error('Error loading screening:', err);
+      setError('Failed to load screening data. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleVote = async (movieId: string) => {
-    if (!nextScreening) return;
+    if (!selectedScreening) return;
     
     try {
-      await voteAPI.castVote(movieId, nextScreening.id);
+      await voteAPI.castVote(movieId, selectedScreening.id);
       setUserVote(movieId);
-      // Refresh data to get updated vote counts
-      await loadData();
+      // Refresh the selected screening to get updated vote counts
+      await handleScreeningSelect(selectedScreening.id);
     } catch (err) {
       console.error('Error voting:', err);
       setError('Failed to cast vote. Please try again.');
@@ -66,13 +116,13 @@ const Dashboard: React.FC = () => {
   };
 
   const handleCancelVote = async () => {
-    if (!nextScreening) return;
+    if (!selectedScreening) return;
     
     try {
-      await voteAPI.cancelVote(nextScreening.id);
+      await voteAPI.cancelVote(selectedScreening.id);
       setUserVote(null);
-      // Refresh data to get updated vote counts
-      await loadData();
+      // Refresh the selected screening to get updated vote counts
+      await handleScreeningSelect(selectedScreening.id);
     } catch (err) {
       console.error('Error cancelling vote:', err);
       setError('Failed to cancel vote. Please try again.');
@@ -104,7 +154,7 @@ const Dashboard: React.FC = () => {
     });
   };
 
-  const isVotingClosed = nextScreening ? new Date(nextScreening.date) <= new Date() : true;
+  const isVotingClosed = selectedScreening ? new Date(selectedScreening.date) <= new Date() : true;
 
   if (loading) {
     return (
@@ -168,29 +218,52 @@ const Dashboard: React.FC = () => {
           </Alert>
         )}
 
-        {!nextScreening ? (
+        {!selectedScreening ? (
           <Paper sx={{ p: 4, textAlign: 'center' }}>
             <Typography variant="h5" gutterBottom>
-              No Upcoming Screenings
+              No Screenings Available
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Check back later for the next movie night!
+              Check back later for upcoming movie nights!
             </Typography>
           </Paper>
         ) : (
           <>
+            <ScreeningSelector 
+              screenings={allScreenings}
+              selectedScreeningId={selectedScreeningId}
+              onScreeningSelect={handleScreeningSelect}
+              nextScreeningId={nextScreeningId}
+            />
+            
             <Paper sx={{ p: 3, mb: 4 }}>
               <Typography variant="h4" component="h1" gutterBottom align="center">
-                🎬 Next Movie Night
+                🎬 Movie Night
               </Typography>
+              {selectedScreening.theme && (
+                <Typography variant="h5" align="center" color="secondary" gutterBottom sx={{ fontStyle: 'italic' }}>
+                  {selectedScreening.theme}
+                </Typography>
+              )}
               <Typography variant="h6" align="center" color="primary" gutterBottom>
-                {formatDate(nextScreening.date)}
+                {formatDate(selectedScreening.date)}
               </Typography>
-              {isVotingClosed ? (
+              {selectedScreeningId === nextScreeningId && (
+                <Typography variant="body2" align="center" color="primary" sx={{ fontWeight: 'bold', mb: 2 }}>
+                  ⏰ Next Screening
+                </Typography>
+              )}
+              {selectedScreeningId !== nextScreeningId && new Date(selectedScreening.date) > new Date() && (
+                <Typography variant="body2" align="center" color="info.main" sx={{ fontWeight: 'bold', mb: 2 }}>
+                  🔮 Future Screening
+                </Typography>
+              )}
+              {isVotingClosed && (
                 <Alert severity="info" sx={{ mt: 2 }}>
                   Voting is closed for this screening.
                 </Alert>
-              ) : (
+              )}
+              {!isVotingClosed && (
                 <Typography variant="body1" align="center" color="text.secondary">
                   Vote for your favorite movie! You can change your vote until the screening date.
                 </Typography>
@@ -198,7 +271,10 @@ const Dashboard: React.FC = () => {
             </Paper>
 
             <Grid container spacing={3}>
-              {nextScreening.movies.map((movie) => (
+              {selectedScreening.movies
+                .slice() // Create a copy to avoid mutating the original
+                .sort((a, b) => b.votes - a.votes) // Sort by votes descending
+                .map((movie, index) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={movie.id}>
                   <MovieCard
                     movie={movie}
@@ -207,6 +283,7 @@ const Dashboard: React.FC = () => {
                     hasVoted={userVote !== null}
                     userVotedFor={userVote}
                     isVotingClosed={isVotingClosed}
+                    isTopVoted={index === 0 && movie.votes > 0} // Highlight first movie if it has votes
                   />
                 </Grid>
               ))}
@@ -217,6 +294,12 @@ const Dashboard: React.FC = () => {
                 Refresh Results
               </Button>
             </Box>
+
+            {/* Movie Suggestions Section */}
+            <MovieSuggestions 
+              screeningId={selectedScreening.id}
+              screeningTheme={selectedScreening.theme}
+            />
           </>
         )}
       </Container>

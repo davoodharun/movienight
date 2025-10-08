@@ -64,6 +64,39 @@ export const voteRoutes = (database: Database, configManager: ConfigManager) => 
     }
   });
 
+  // Cancel user's vote for a screening
+  router.delete('/:screeningId', authenticateToken, async (req: any, res) => {
+    try {
+      const { screeningId } = req.params;
+      const userId = req.user.userId;
+
+      // Verify the screening exists
+      const screening = configManager.getScreeningById(screeningId);
+      if (!screening) {
+        return res.status(404).json({ error: 'Screening not found' });
+      }
+
+      // Check if voting is still open
+      if (new Date(screening.date) <= new Date()) {
+        return res.status(400).json({ error: 'Voting is closed for this screening' });
+      }
+
+      // Check if user has a vote to cancel
+      const existingVote = await database.getUserVoteForScreening(userId, screeningId);
+      if (!existingVote) {
+        return res.status(400).json({ error: 'No vote found to cancel' });
+      }
+
+      // Delete the user's vote
+      await database.deleteUserVoteForScreening(userId, screeningId);
+
+      res.json({ message: 'Vote cancelled successfully' });
+    } catch (error) {
+      console.error('Error cancelling vote:', error);
+      res.status(500).json({ error: 'Failed to cancel vote' });
+    }
+  });
+
   // Admin: Clear all votes for a screening
   router.delete('/admin/clear/:screeningId', authenticateToken, async (req: any, res) => {
     try {

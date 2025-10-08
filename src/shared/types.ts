@@ -35,12 +35,14 @@ export interface MovieScreening {
   id: string;
   date: string; // ISO date string
   movies: Movie[];
+  theme?: string; // Add theme property
 }
 
 export interface ConfigScreening {
   id: string;
   date: string;
   movies: ConfigMovie[];
+  theme?: string; // Add theme property
 }
 
 export interface User {
@@ -59,4 +61,14 @@ export interface Vote {
 
 export interface Config {
   screenings: ConfigScreening[];
+}
+
+export interface MovieSuggestion {
+  id: string;
+  screeningId: string;
+  userId: string;
+  title: string;
+  year?: number;
+  createdAt: string;
+  user?: User; // Optional user info for display
 }

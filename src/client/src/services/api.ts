@@ -65,6 +65,7 @@ export interface MovieScreening {
   id: string;
   date: string;
   movies: Movie[];
+  theme?: string; // Add theme property
 }
 
 export interface Vote {
@@ -73,6 +74,20 @@ export interface Vote {
   movieId: string;
   screeningId: string;
   createdAt: string;
+}
+
+export interface MovieSuggestion {
+  id: string;
+  screeningId: string;
+  userId: string;
+  title: string;
+  year?: number;
+  createdAt: string;
+  user?: {
+    id: string;
+    username: string;
+    name: string;
+  }; // Optional user info for display
 }
 
 export const authAPI = {
@@ -90,6 +105,11 @@ export const authAPI = {
 export const movieAPI = {
   getNextScreening: async (): Promise<{ screening: MovieScreening | null }> => {
     const response = await api.get('/movies/next-screening');
+    return response.data;
+  },
+  
+  getScreeningById: async (id: string): Promise<{ screening: MovieScreening | null }> => {
+    const response = await api.get(`/movies/screening/${id}`);
     return response.data;
   },
   
@@ -117,6 +137,18 @@ export const voteAPI = {
 
   clearAllVotes: async (screeningId: string): Promise<{ message: string }> => {
     const response = await api.delete(`/votes/admin/clear/${screeningId}`);
+    return response.data;
+  },
+};
+
+export const suggestionAPI = {
+  submitSuggestion: async (title: string, year: number | undefined, screeningId: string): Promise<{ suggestion: MovieSuggestion }> => {
+    const response = await api.post('/suggestions', { title, year, screeningId });
+    return response.data;
+  },
+  
+  getSuggestionsForScreening: async (screeningId: string): Promise<{ suggestions: MovieSuggestion[] }> => {
+    const response = await api.get(`/suggestions/screening/${screeningId}`);
     return response.data;
   },
 };

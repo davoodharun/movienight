@@ -3,6 +3,7 @@
     {
       "id": "screening_1",
       "date": "2025-10-18T18:16:11.651Z",
+      "theme": "Spooky & Scary 1: Classics",
       "movies": [
         {
           "id": "movie_1",
@@ -83,105 +84,79 @@
     {
       "id": "screening_2",
       "date": "2025-11-01T18:16:11.652Z",
+      "theme": "Halloween Part 2: Modern Frights",
       "movies": [
         {
           "id": "movie_5",
-          "title": "The Dark Knight",
-          "year": 2008,
+          "title": "Get Out",
+          "year": 2017,
           "metadata": {
-            "tmdb_id": 155,
-            "overview": "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.",
-            "poster_path": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-            "backdrop_path": "https://image.tmdb.org/t/p/w500/cfT29Im5VDvjE0RpyKOSdCKZal7.jpg",
-            "vote_average": 8.523,
-            "vote_count": 34488,
-            "runtime": 152,
+            "tmdb_id": 419430,
+            "overview": "Chris and his girlfriend Rose go upstate to visit her parents for the weekend. At first, Chris reads the family's overly accommodating behavior as nervous attempts to deal with their daughter's interracial relationship, but as the weekend progresses, a series of increasingly disturbing discoveries lead him to a truth that he never could have imagined.",
+            "poster_path": "https://image.tmdb.org/t/p/w500/tFXcEccSQMf3lfhfXKSU9iRBpa3.jpg",
+            "backdrop_path": "https://image.tmdb.org/t/p/w500/bBQHALHRAaaORlPNXv7fNcRXYdx.jpg",
+            "vote_average": 7.619,
+            "vote_count": 18167,
+            "runtime": 104,
             "genres": [
-              "Drama",
-              "Action",
-              "Crime",
-              "Thriller"
+              "Mystery",
+              "Thriller",
+              "Horror"
             ],
-            "release_date": "2008-07-16",
-            "tagline": "Welcome to a world without rules.",
-            "imdb_id": "tt0468569",
-            "budget": 185000000,
-            "revenue": 1004558444,
-            "fetched_at": "2025-10-06T21:46:48.248Z"
+            "release_date": "2017-02-24",
+            "tagline": "Just because you're invited, doesn't mean you're welcome.",
+            "imdb_id": "tt5052448",
+            "budget": 4500000,
+            "revenue": 255407969,
+            "fetched_at": "2025-10-08T15:47:15.504Z"
           }
         },
         {
           "id": "movie_6",
-          "title": "Pulp Fiction",
-          "year": 1994,
+          "title": "The Mist",
+          "year": 2007,
           "metadata": {
-            "tmdb_id": 680,
-            "overview": "A burger-loving hit man, his philosophical partner, a drug-addled gangster's moll and a washed-up boxer converge in this sprawling, comedic crime caper. Their adventures unfurl in three stories that ingeniously trip back and forth in time.",
-            "poster_path": "https://image.tmdb.org/t/p/w500/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg",
-            "backdrop_path": "https://image.tmdb.org/t/p/w500/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg",
-            "vote_average": 8.487,
-            "vote_count": 29132,
-            "runtime": 154,
+            "tmdb_id": 5876,
+            "overview": "After a violent storm, a dense cloud of mist envelops a small Maine town, trapping David Drayton and his five-year-old son in a local grocery store with other local residents. They soon discover that the mist conceals deadly horrors that threaten their lives, and worse, their sanity.",
+            "poster_path": "https://image.tmdb.org/t/p/w500/1CvJ6diBACKPVGOpcWuY4XPQdqX.jpg",
+            "backdrop_path": "https://image.tmdb.org/t/p/w500/76J14zgwVWyOciri7X7F3DGP3TA.jpg",
+            "vote_average": 6.937,
+            "vote_count": 5542,
+            "runtime": 126,
             "genres": [
-              "Thriller",
-              "Crime",
-              "Comedy",
-              "Drama"
+              "Horror",
+              "Science Fiction",
+              "Thriller"
             ],
-            "release_date": "1994-09-10",
-            "tagline": "From the creator of 'True Romance' & 'Reservoir Dogs'",
-            "imdb_id": "tt0110912",
-            "budget": 8000000,
-            "revenue": 213928762,
-            "fetched_at": "2025-10-06T21:46:48.496Z"
+            "release_date": "2007-11-21",
+            "tagline": "Fear changes everything.",
+            "imdb_id": "tt0884328",
+            "budget": 18000000,
+            "revenue": 57470220,
+            "fetched_at": "2025-10-08T15:47:15.750Z"
           }
         },
         {
           "id": "movie_7",
-          "title": "The Godfather",
-          "year": 1972,
+          "title": "Late Night with the Devil",
+          "year": 2024,
           "metadata": {
-            "tmdb_id": 238,
-            "overview": "Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.",
-            "poster_path": "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
-            "backdrop_path": "https://image.tmdb.org/t/p/w500/jdHsptJbtalEuVhCV5i7kSC3g0x.jpg",
-            "vote_average": 8.686,
-            "vote_count": 21899,
-            "runtime": 175,
+            "tmdb_id": 938614,
+            "overview": "A live broadcast of a late-night talk show in 1977 goes horribly wrong, unleashing evil into the nation's living rooms.",
+            "poster_path": "https://image.tmdb.org/t/p/w500/mu8LRWT9GHkfiyHm7kgxT6YNvMW.jpg",
+            "backdrop_path": "https://image.tmdb.org/t/p/w500/umyOinNa6vqqnqoVc9QqzyaapUz.jpg",
+            "vote_average": 7.114,
+            "vote_count": 1805,
+            "runtime": 93,
             "genres": [
-              "Drama",
-              "Crime"
+              "Horror"
             ],
-            "release_date": "1972-03-14",
-            "tagline": "An offer you can't refuse.",
-            "imdb_id": "tt0068646",
-            "budget": 6000000,
-            "revenue": 245066411,
-            "fetched_at": "2025-10-06T21:46:48.751Z"
-          }
-        },
-        {
-          "id": "movie_8",
-          "title": "Goodfellas",
-          "year": 1990,
-          "metadata": {
-            "tmdb_id": 769,
-            "overview": "The true story of Henry Hill, a half-Irish, half-Sicilian Brooklyn kid who is adopted by neighbourhood gangsters at an early age and climbs the ranks of a Mafia family under the guidance of Jimmy Conway.",
-            "poster_path": "https://image.tmdb.org/t/p/w500/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg",
-            "backdrop_path": "https://image.tmdb.org/t/p/w500/sw7mordbZxgITU877yTpZCud90M.jpg",
-            "vote_average": 8.455,
-            "vote_count": 13672,
-            "runtime": 145,
-            "genres": [
-              "Drama",
-              "Crime"
-            ],
-            "release_date": "1990-09-12",
-            "tagline": "Three decades of life in the mafia.",
-            "imdb_id": "tt0099685",
-            "budget": 25000000,
-            "revenue": 47072327,
-            "fetched_at": "2025-10-06T21:46:49.059Z"
+            "release_date": "2024-03-19",
+            "tagline": "Do not adjust your set.",
+            "imdb_id": "tt14966898",
+            "budget": 2000000,
+            "revenue": 15469415,
+            "fetched_at": "2025-10-08T15:47:16.022Z"
           }
         }
       ]
