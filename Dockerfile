@@ -35,7 +35,7 @@ RUN npm rebuild sqlite3
 COPY --from=server-build /app/dist ./dist
 
 # Copy built client
-COPY --from=client-build /app/client/build ./dist/client/dist
+COPY --from=client-build /app/client/build ./dist/client/build
 
 # Copy scripts for runtime
 COPY scripts/ ./scripts/
